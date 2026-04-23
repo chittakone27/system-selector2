@@ -11,7 +11,19 @@
   background-repeat: no-repeat;
   text-indent: -9999px;
 }
-
+.react-dropdown-tree-select .dropdown-content {
+  max-height: 400px;        /* limit height */
+  min-width: 300px;         /* optional min width */
+  max-width: 500px;         /* limit max width */
+  overflow-y: auto;         /* vertical scroll */
+  overflow-x: hidden;       /* hide horizontal scroll */
+  border: 1px solid #ccc;  /* optional border */
+  border-radius: 6px;       /* rounded edges */
+  padding: 4px;             /* optional padding */
+  box-sizing: border-box;
+  background: white;        /* dropdown background */
+  z-index: 9999;            /* ensure it appears above other elements */
+}
 /* โฟลเดอร์ปิด */
 
 .react-dropdown-tree-select .toggle {
