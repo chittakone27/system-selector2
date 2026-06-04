@@ -1,21 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>:Mine:</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao&display=swap" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script type="module">
-//assets/index.b4863760.js
 const Vh=function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))r(o);new MutationObserver(o=>{for(const l of o)if(l.type==="childList")for(const i of l.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function n(o){const l={};return o.integrity&&(l.integrity=o.integrity),o.referrerpolicy&&(l.referrerPolicy=o.referrerpolicy),o.crossorigin==="use-credentials"?l.credentials="include":o.crossorigin==="anonymous"?l.credentials="omit":l.credentials="same-origin",l}function r(o){if(o.ep)return;o.ep=!0;const l=n(o);fetch(o.href,l)}};Vh();var bt={exports:{}},b={};/**
  * @license React
  * react.production.min.js
@@ -58,17 +40,3 @@ Error generating stack: `+l.message+`
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */var Yw=bt.exports,Zw=Symbol.for("react.element"),Xw=Symbol.for("react.fragment"),bw=Object.prototype.hasOwnProperty,qw=Yw.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,Jw={key:!0,ref:!0,__self:!0,__source:!0};function kh(e,t,n){var r,o={},l=null,i=null;n!==void 0&&(l=""+n),t.key!==void 0&&(l=""+t.key),t.ref!==void 0&&(i=t.ref);for(r in t)bw.call(t,r)&&!Jw.hasOwnProperty(r)&&(o[r]=t[r]);if(e&&e.defaultProps)for(r in t=e.defaultProps,t)o[r]===void 0&&(o[r]=t[r]);return{$$typeof:Zw,type:e,key:l,ref:i,props:o,_owner:qw.current}}gi.Fragment=Xw;gi.jsx=kh;gi.jsxs=kh;va.exports=gi;const Ke=va.exports.jsx,Xc=va.exports.jsxs;function eR(){const[e,t]=bt.exports.useState([]),[n,r]=bt.exports.useState(!0);return bt.exports.useEffect(()=>{const{username:o,password:l}=Qw,i=btoa(`${o}:${l}`);fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links",{headers:{Authorization:`Basic ${i}`,"Content-Type":"application/json"}}).then(u=>{if(!u.ok)throw new Error(`HTTP error! status: ${u.status}`);return u.json()}).then(u=>{const s=u.links||u||[],a=Array.isArray(s)?s.map(f=>({...f,link:f.link?.startsWith("http")?f.link:`https://${f.link}`})):[];t(a),r(!1)}).catch(u=>{console.error(u),r(!1)})},[]),n?Ke("div",{className:"page",children:Ke("div",{className:"container",children:Ke("h2",{children:"Loading..."})})}):Ke("div",{className:"page",children:Xc("div",{className:"container",children:[Ke("h1",{children:"DHIS2 System Portal"}),Ke("div",{className:"subtitle",children:"\u0E81\u0EB0\u0EA5\u0EB8\u0E99\u0EB2\u0EC0\u0EA5\u0EB7\u0EAD\u0E81\u0EA5\u0EB0\u0E9A\u0EBB\u0E9A / Select a system"}),Ke("div",{className:"grid",children:e.map((o,l)=>Xc("a",{className:"card",href:o.link,target:"_blank",rel:"noopener noreferrer",children:[Ke("span",{className:"en",children:o.title}),Ke("span",{className:"lo",children:o.desc1}),o.desc2&&Ke("span",{className:"lo",children:o.desc2})]},l))})]})})}const tR=()=>(bt.exports.useEffect(()=>{const e=setInterval(()=>{const t=parent?.document?.getElementById("dhis2-app-root");if(t){try{t.children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[0].style.width="100%"}catch{console.warn("DHIS2 DOM changed, cannot resize layout")}clearInterval(e)}},1e3);return()=>clearInterval(e)},[]),Ke("div",{children:Ke(eR,{})})),nR=nu.createRoot(document.getElementById("root"));nR.render(Ke(Gw,{children:Ke(tR,{})}));
-
-</script>
-  <style type="text/css">
-body{margin:0;font-family:Noto Sans Lao,Arial,sans-serif}.page{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#e8f3ff,#d6e9ff)}.container{text-align:center;padding:60px 40px;border-radius:18px;background:white;box-shadow:0 15px 40px #0000001f;max-width:850px;width:90%}h1{color:#2a6ebb}.subtitle{margin-bottom:30px;opacity:.7}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}.card{display:block;padding:20px;border-radius:14px;text-decoration:none;color:#1a3b5d;background:#f5faff;border:1px solid #d6e9ff;transition:.3s}.card:hover{background:#2a6ebb;color:#fff;transform:translateY(-4px)}.en{font-size:18px;font-weight:700;display:block}.lo{font-size:13px;opacity:.8;display:block;margin-top:5px}
-
-</style>
-</head>
-
-<body>
-    <div id="root"></div>
-</body>
-
-
-</html>

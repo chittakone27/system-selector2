@@ -1,7 +1,6 @@
 // App.jsx
 import React, { useEffect } from "react";
-import OrgUnitReport from "./reports/OrgUnitReport";
-import "./reports/OrgUnitTree/OrgUnitTree.css";
+import Page from "./reports/page";
 
 const App = () => {
   // Expand DHIS2 page width (safe version)
@@ -26,7 +25,7 @@ const App = () => {
 
   return (
       <div>
-        <OrgUnitReport />
+        <Page />
       </div>
   );
 };

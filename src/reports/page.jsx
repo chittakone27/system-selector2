@@ -1,88 +1,84 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { API_AUTH } from "../config";
+import { useEffect, useState } from "react";
+import "./Portal.css";
+import { API_AUTH } from "../../config";
 
-const EventSummary = ({ orgUnitId }) => {
-  const [enrollments, setEnrollments] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const year = "2025;2026"
+export default function Portal() {
+  const [systems, setSystems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!orgUnitId) return;
+    const { username, password } = API_AUTH;
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    const token = btoa(`${username}:${password}`);
 
-      try {
-        // Fetch enrollments
-        const enrollUrl = `https://hfml.gov.la/hfml/api/29/analytics/enrollments/query/gr24luudE0t.json`;
-        const enrollRes = await axios.get(enrollUrl, {
-          auth: API_AUTH,
-          params: {
-            dimension: [`pe:${year}`, `ou:${orgUnitId}`],
-            stage: "MLBhJz9GKds",
-            displayProperty: "NAME",
-            totalPages: false,
-            outputType: "ENROLLMENT",
-            desc: "enrollmentdate",
-            paging: false,
-          },
-        });
-        const enrollmentRows = enrollRes.data.rows || [];
-        setEnrollments(enrollmentRows);
+    fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links", {
+      headers: {
+        Authorization: `Basic ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const list = data.links || data || [];
 
-        // Fetch events
-        const eventUrl = `https://hfml.gov.la/hfml/api/29/analytics/events/query/gr24luudE0t.json`;
-        const eventRes = await axios.get(eventUrl, {
-          auth: API_AUTH,
-          params: {
-            dimension: [`pe:${year}`, `ou:${orgUnitId}`],
-            stage: "MLBhJz9GKds",
-            displayProperty: "NAME",
-            totalPages: false,
-            outputType: "EVENT",
-            desc: "eventdate",
-            paging: false,
-          },
-        });
-        const eventRows = eventRes.data.rows || [];
-        setEvents(eventRows);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to fetch data");
-      } finally {
+        const fixed = Array.isArray(list)
+          ? list.map((sys) => ({
+              ...sys,
+              link: sys.link?.startsWith("http")
+                ? sys.link
+                : `https://${sys.link}`,
+            }))
+          : [];
+
+        setSystems(fixed);
         setLoading(false);
-      }
-    };
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
-    fetchData();
-  }, [orgUnitId]);
-
-  const completedEvents = events.filter(
-    e => e[events.length && events[0].length > 0 ? 0 : 0] // placeholder
-  ).length;
-
-  // Compute completion percentage
-  const completionPercent = enrollments.length
-    ? Math.min((events.length / enrollments.length) * 100, 100).toFixed(2)
-    : 0;
+  if (loading) {
+    return (
+      <div className="page">
+        <div className="container">
+          <h2>Loading...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h2>Event Summary</h2>
-      {loading && <p>Loading data...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!loading && !error && (
-        <>
-          <p>Total enrollments: {enrollments.length}</p>
-          <p>Total events: {events.length}</p>
-          <p>Completion: {completionPercent}%</p>
-        </>
-      )}
+    <div className="page">
+      <div className="container">
+        <h1>DHIS2 System Portal</h1>
+
+        <div className="subtitle">
+          ກະລຸນາເລືອກລະບົບ / Select a system
+        </div>
+
+        <div className="grid">
+          {systems.map((sys, i) => (
+            <a
+              className="card"
+              href={sys.link}
+              key={i}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="en">{sys.title}</span>
+              <span className="lo">{sys.desc1}</span>
+              {sys.desc2 && <span className="lo">{sys.desc2}</span>}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
-};
-
-export default EventSummary;
+}
