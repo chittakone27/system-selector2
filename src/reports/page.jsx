@@ -9,7 +9,6 @@ export default function Portal() {
   async function checkUserLogin() {
     try {
       const res = await fetch("https://hfml.gov.la/hfml/api/me", {
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -28,7 +27,6 @@ export default function Portal() {
 
     if (loggedIn) {
       const res = await fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links", {
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
