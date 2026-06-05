@@ -6,26 +6,54 @@ export default function Portal() {
   const [systems, setSystems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  async function checkUserLogin() {
+    try {
+      const res = await fetch("https://hfml.gov.la/hfml/api/me", {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) throw new Error("Not logged in");
+      const data = await res.json();
+      return { loggedIn: true, user: data };
+    } catch (err) {
+      return { loggedIn: false };
+    }
+  }
+
+  // ฟังก์ชัน fetch DataStore ขึ้นอยู่กับว่า user login หรือไม่
+  async function fetchPortalLinks() {
+    const { loggedIn } = await checkUserLogin();
+
+    if (loggedIn) {
+      const res = await fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links", {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return await res.json();
+    } else {
+      const { username, password } = API_AUTH;
+      const token = btoa(`${username}:${password}`);
+      const res = await fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links", {
+        headers: {
+          Authorization: `Basic ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return await res.json();
+    }
+  }
+
   useEffect(() => {
-    const { username, password } = API_AUTH;
-
-    const token = btoa(`${username}:${password}`);
-
-    fetch("https://hfml.gov.la/hfml/api/dataStore/portal/links", {
-      headers: {
-        Authorization: `Basic ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
+    setLoading(true);
+    fetchPortalLinks()
       .then((data) => {
         const list = data.links || data || [];
-
         const fixed = Array.isArray(list)
           ? list.map((sys) => ({
               ...sys,
@@ -34,7 +62,6 @@ export default function Portal() {
                 : `https://${sys.link}`,
             }))
           : [];
-
         setSystems(fixed);
         setLoading(false);
       })
@@ -54,30 +81,25 @@ export default function Portal() {
     );
   }
 
-return (
-  <div className="page">
-    <div className="container">
-      <h1>DHIS2 System Portal</h1>
+  return (
+    <div className="page">
+      <div className="container">
+        <h1>DHIS2 System Portal</h1>
 
-      <div className="subtitle">
-        ກະລຸນາເລືອກລະບົບ / Select a system
-      </div>
+        <div className="subtitle">
+          ກະລຸນາເລືອກລະບົບ / Select a system
+        </div>
 
-      <div className="grid">
-        {systems.map((sys, i) => (
-          <a
-            className="card"
-            href={sys.link}
-            key={i}
-          >
-            <span className="en">{sys.title}</span>
-            <span className="lo">{sys.desc1}</span>
-            {sys.desc2 && <span className="lo">{sys.desc2}</span>}
-          </a>
-        ))}
+        <div className="grid">
+          {systems.map((sys, i) => (
+            <a className="card" href={sys.link} key={i}>
+              <span className="en">{sys.title}</span>
+              <span className="lo">{sys.desc1}</span>
+              {sys.desc2 && <span className="lo">{sys.desc2}</span>}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
-  
+  );
 }
