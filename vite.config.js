@@ -27,7 +27,7 @@ const reportConfig = {
 };
 
 const appConfig = {
-  base: "./",
+  base: "/select/",
   plugins: [react()],
   resolve: {
     alias: {
