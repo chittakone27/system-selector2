@@ -54,31 +54,30 @@ export default function Portal() {
     );
   }
 
-  return (
-    <div className="page">
-      <div className="container">
-        <h1>DHIS2 System Portal</h1>
+return (
+  <div className="page">
+    <div className="container">
+      <h1>DHIS2 System Portal</h1>
 
-        <div className="subtitle">
-          ກະລຸນາເລືອກລະບົບ / Select a system
-        </div>
+      <div className="subtitle">
+        ກະລຸນາເລືອກລະບົບ / Select a system
+      </div>
 
-        <div className="grid">
-          {systems.map((sys, i) => (
-            <a
-              className="card"
-              href={sys.link}
-              key={i}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="en">{sys.title}</span>
-              <span className="lo">{sys.desc1}</span>
-              {sys.desc2 && <span className="lo">{sys.desc2}</span>}
-            </a>
-          ))}
-        </div>
+      <div className="grid">
+        {systems.map((sys, i) => (
+          <a
+            className="card"
+            href={sys.link}
+            key={i}
+          >
+            <span className="en">{sys.title}</span>
+            <span className="lo">{sys.desc1}</span>
+            {sys.desc2 && <span className="lo">{sys.desc2}</span>}
+          </a>
+        ))}
       </div>
     </div>
-  );
+  </div>
+);
+  
 }
