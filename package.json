@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "cross-env VITE_MODE=production VITE_BASE_URL=../ VITE_USERNAME= VITE_PASSWORD= vite build",
-    "build-as-app": "cross-env VITE_MODE=production VITE_BASE_URL=../../.. VITE_USERNAME= VITE_PASSWORD= VITE_REPORT_MODE=app vite build && node app.js",
-    "deploy": "cross-env VITE_MODE=production VITE_BASE_URL=../ VITE_USERNAME= VITE_PASSWORD= vite build && node publish.js",
+    "build": "cross-env VITE_MODE=production VITE_BASE_URL=../ vite build",
+    "build-as-app": "cross-env VITE_MODE=production VITE_BASE_URL=../../.. VITE_REPORT_MODE=app vite build && node app.js",
+    "deploy": "cross-env VITE_MODE=production VITE_BASE_URL=../ vite build && node publish.js",
     "preview": "vite preview"
   },
   "devDependencies": {

@@ -17,7 +17,7 @@ body {
   border-radius: 18px;
   background: white;
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-  max-width: 850px;
+  max-width: 1600px;
   width: 90%;
 }
 
@@ -32,7 +32,7 @@ h1 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./Portal.css";
-import { API_AUTH } from "../../config";
 
 export default function Portal() {
   const [systems, setSystems] = useState([]);
@@ -34,7 +33,8 @@ export default function Portal() {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       return await res.json();
     } else {
-      const { username, password } = API_AUTH;
+      const username = import.meta.env.VITE_USERNAME;
+      const password = import.meta.env.VITE_PASSWORD;
       const token = btoa(`${username}:${password}`);
       const res = await fetch("https://hfml.health.gov.la/hfml/api/dataStore/portal/links", {
         headers: {
@@ -82,7 +82,7 @@ export default function Portal() {
   return (
     <div className="page">
       <div className="container">
-        <h1>DHIS2 System Portal</h1>
+        <h1>Digital Health Portal</h1>
 
         <div className="subtitle">
           ກະລຸນາເລືອກລະບົບ / Select a system
