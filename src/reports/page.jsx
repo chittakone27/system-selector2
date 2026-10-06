@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Portal.css";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export default function Portal() {
   const [systems, setSystems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function checkUserLogin() {
     try {
-      const res = await fetch("/hfml/api/me", {
+      const res = await fetch(`${BASE_URL}/api/me`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -25,7 +27,7 @@ export default function Portal() {
     const { loggedIn } = await checkUserLogin();
 
     if (loggedIn) {
-      const res = await fetch("/hfml/api/dataStore/portal/links", {
+      const res = await fetch(`${BASE_URL}/api/dataStore/portal/links`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,7 +38,7 @@ export default function Portal() {
       const username = import.meta.env.VITE_USERNAME;
       const password = import.meta.env.VITE_PASSWORD;
       const token = btoa(`${username}:${password}`);
-      const res = await fetch("/hfml/api/dataStore/portal/links", {
+      const res = await fetch(`${BASE_URL}/api/dataStore/portal/links`, {
         headers: {
           Authorization: `Basic ${token}`,
           "Content-Type": "application/json",
