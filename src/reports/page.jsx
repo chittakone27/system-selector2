@@ -7,7 +7,7 @@ export default function Portal() {
 
   async function checkUserLogin() {
     try {
-      const res = await fetch("https://hfml.health.gov.la/hfml/api/me", {
+      const res = await fetch("/hfml/api/me", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -25,7 +25,7 @@ export default function Portal() {
     const { loggedIn } = await checkUserLogin();
 
     if (loggedIn) {
-      const res = await fetch("https://hfml.health.gov.la/hfml/api/dataStore/portal/links", {
+      const res = await fetch("/hfml/api/dataStore/portal/links", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,7 +36,7 @@ export default function Portal() {
       const username = import.meta.env.VITE_USERNAME;
       const password = import.meta.env.VITE_PASSWORD;
       const token = btoa(`${username}:${password}`);
-      const res = await fetch("https://hfml.health.gov.la/hfml/api/dataStore/portal/links", {
+      const res = await fetch("/hfml/api/dataStore/portal/links", {
         headers: {
           Authorization: `Basic ${token}`,
           "Content-Type": "application/json",
